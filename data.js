@@ -7,18 +7,16 @@
 const appData = {
     // ---- Company Info ----
     company: {
-        name: "Loyapy",
-        logoText: 'Loyapy',
+        name: "Trusozi",
+        logoText: 'Trusozi',
         slogan: "High-quality electronics and accessories to elevate your digital life.",
-        currencySymbol: "৳",
-        freeShippingThreshold: 1500, // BDT
-        contactEmail: "info@loyapy.com",
-        whatsappNumber: "+8801735528254", // Example UAE number, replace with your actual number
-        whatsappMessagePrefix: "Hello Loyapy, I'd like to order the following:\n\n",
-        footerDesignedBy: "Designed by Loyapy.",
-        facebookLink: "https://www.facebook.com/share/19Dbj1JNVL",
-        twitterLink: "https://x.com/loyapy?t=AZ4Sp8zWW5G9XaWUPd8csQ&s=09",
-        instagramLink: "https://www.instagram.com/loyapy24?igsh=dm9wYTF1Y2pqY2J2",
+        currencySymbol: "$",
+        freeShippingThreshold: 100, // BDT
+        contactEmail: "info@trusozi.com",
+        whatsappNumber: "+971557983424", // Example UAE number, replace with your actual number
+        whatsappMessagePrefix: "Hello Trusozi, I'd like to order the following:\n\n",
+        footerDesignedBy: "Designed by Trusozi."
+
     },
 
     // ---- Navigation Links ----
@@ -79,7 +77,7 @@ const appData = {
     products: [
         {
             id: "product_1",
-            name: "Smart Kitchen Trash Bin",
+            name: "Spardar Kitchen Chopping Boards",
             shortDescription: "A compact, odor-free, and durable wall-mounted bin that doubles as storage for a clutter-free space.",
             longDescription: "Kitchen Trash Bin — the smart solution for keeping your kitchen, mess room, or study area organized and clutter-free. This wall-mounted plastic bin is cleverly designed to store both waste and essential items without occupying valuable space. Whether you need to stash utensils, important papers, tissue rolls, or poly bags, it handles it all efficiently. Its odor-sealing design ensures a fresh, clean environment while providing easy access for removing or replacing trash. Compact yet spacious, it blends seamlessly with any decor, making it perfect for placement near dining tables, study corners, or kitchen countertops. Simplify your daily routine with this all-in-one storage and trash solution. ### Why I Recommend It: I recommend the Kitchen Trash Bin because it’s more than just a waste container — it’s a smart, space-saving organizer that enhances both functionality and cleanliness. Its multifunctional design, compact size, and odor-free storage make it ideal for smaller spaces where efficiency matters. It's a practical addition to any modern home.",
             basePrice: 990.00,
@@ -114,204 +112,25 @@ const appData = {
             isFeatured: true
         },
 
-        {
+
+            {
             id: "product_2",
-            name: "Rechargeable Electric Cleaning Brush",
-            shortDescription: "This versatile brush effortlessly cleans kitchen sinks, Hari Patil, sofas, tiles, meat fat, and Thai glass surfaces.",
-            longDescription: "Introducing a powerful and versatile electronic cleaning brush designed to remove stubborn dirt and grime from every corner of your home or kitchen. Whether you're scrubbing the kitchen sink, Hari Patil, sofas, or tiles, the included Teflon brush makes the job effortless. Built for durability and performance, it features a brushless motor and a sturdy ABS plastic body. The built-in 2000mAh lithium battery offers extended use on a single charge, and USB charging ensures universal convenience. Fully waterproof, this cleaning brush is easy to clean and ready for any mess—wet or dry.",
-            basePrice: 850.00,
-            originalPrice: 1590.00,
-            category: "Home & Kitchen",
-            images: {
-                "off_white": imagePaths.products.product_2.product_21,
-                default: imagePaths.products.product_2.default,
-            },
-            thumbnails: [
-                imagePaths.products.product_2.product_21,
-                imagePaths.products.product_2.product_22,
-                imagePaths.products.product_2.product_23,
-                imagePaths.products.product_2.product_24,
-                imagePaths.products.product_2.product_25,
-
-            ],
-            colors: [
-                { name: "Off white", hex: "#b3b3b5", imageKey: "off_white" },
-            ],
-            specifications: [
-                { label: "Brand", value: "RAYBIN" },
-                { label: "Manufacturer", value: "RAYBIN" },
-                { label: "Color", value: "Off-White" },
-                { label: "Model", value: "RBSKA018-17" },
-                { label: "Material", value: "ABS Plastic" },
-                { label: "Dimension", value: " 17.5*7.4*26cm, weight: 372.5g" },
-
-
-            ],
-            isFeatured: true
-        },
-
-        {
-            id: "product_3",
-            name: "Folding Waste Bins Kitchen",
+            name: "Royalford Kitchen Scissors",
             shortDescription: "A compact, odor-free, and durable wall-mounted bin that doubles as storage for a clutter-free space.",
             longDescription: "Kitchen Trash Bin — the smart solution for keeping your kitchen, mess room, or study area organized and clutter-free. This wall-mounted plastic bin is cleverly designed to store both waste and essential items without occupying valuable space. Whether you need to stash utensils, important papers, tissue rolls, or poly bags, it handles it all efficiently. Its odor-sealing design ensures a fresh, clean environment while providing easy access for removing or replacing trash. Compact yet spacious, it blends seamlessly with any decor, making it perfect for placement near dining tables, study corners, or kitchen countertops. Simplify your daily routine with this all-in-one storage and trash solution. ### Why I Recommend It: I recommend the Kitchen Trash Bin because it’s more than just a waste container — it’s a smart, space-saving organizer that enhances both functionality and cleanliness. Its multifunctional design, compact size, and odor-free storage make it ideal for smaller spaces where efficiency matters. It's a practical addition to any modern home.",
             basePrice: 990.00,
             originalPrice: 1690.00,
             category: "Home & Kitchen",
             images: {
-                "white": imagePaths.products.product_1.product_12,
+                "white": imagePaths.products.product_1.product_11,
                 "light_beige": imagePaths.products.product_1.product_110,
-                default: imagePaths.products.product_1.product_12,
+                default: imagePaths.products.product_1.default,
             },
             thumbnails: [
-                imagePaths.products.product_1.product_16,
-                imagePaths.products.product_1.product_12,
-                imagePaths.products.product_1.product_13,
-                imagePaths.products.product_1.product_18,
-                imagePaths.products.product_1.product_15,
-
-            ],
-            colors: [
-                { name: "Light gray", hex: "#b3b3b5", imageKey: "white" },
-                { name: "Light beige", hex: "#e5d7cd", imageKey: "light_beige" },
-            ],
-            specifications: [
-                { label: "Brand", value: "DPEX" },
-                { label: "Manufacturer", value: "DPEX" },
-                { label: "Color", value: "Light gray & Light beige" },
-                { label: "Model", value: "C-317" },
-                { label: "Material", value: "Plastic" },
-                { label: "Dimension", value: "24*16*26cm, The size of the folded is 24*8*26cm" }
-
-            ],
-            isFeatured: true
-        },
-
-        {
-            id: "product_4",
-            name: "Electric Household Cleaning Brush",
-            shortDescription: "This versatile brush effortlessly cleans kitchen sinks, Hari Patil, sofas, tiles, meat fat, and Thai glass surfaces.",
-            longDescription: "Introducing a powerful and versatile electronic cleaning brush designed to remove stubborn dirt and grime from every corner of your home or kitchen. Whether you're scrubbing the kitchen sink, Hari Patil, sofas, or tiles, the included Teflon brush makes the job effortless. Built for durability and performance, it features a brushless motor and a sturdy ABS plastic body. The built-in 2000mAh lithium battery offers extended use on a single charge, and USB charging ensures universal convenience. Fully waterproof, this cleaning brush is easy to clean and ready for any mess—wet or dry.",
-            basePrice: 850.00,
-            originalPrice: 1590.00,
-            category: "Home & Kitchen",
-            images: {
-                "off_white": imagePaths.products.product_2.product_23,
-                default: imagePaths.products.product_2.product_23,
-            },
-            thumbnails: [
-                imagePaths.products.product_2.product_23,
-                imagePaths.products.product_2.product_22,
-                imagePaths.products.product_2.product_21,
-                imagePaths.products.product_2.product_24,
-                imagePaths.products.product_2.product_25,
-
-            ],
-            colors: [
-                { name: "Off white", hex: "#b3b3b5", imageKey: "off_white" },
-            ],
-            specifications: [
-                { label: "Brand", value: "RAYBIN" },
-                { label: "Manufacturer", value: "RAYBIN" },
-                { label: "Color", value: "Off-White" },
-                { label: "Model", value: "RBSKA018-17" },
-                { label: "Material", value: "ABS Plastic" },
-                { label: "Dimension", value: " 17.5*7.4*26cm, weight: 372.5g" },
-
-
-            ],
-            isFeatured: true
-        },
-        {
-            id: "product_5",
-            name: "Foldable Trash Can Collapsible Garbage Can for Home",
-            shortDescription: "A compact, odor-free, and durable wall-mounted bin that doubles as storage for a clutter-free space.",
-            longDescription: "Kitchen Trash Bin — the smart solution for keeping your kitchen, mess room, or study area organized and clutter-free. This wall-mounted plastic bin is cleverly designed to store both waste and essential items without occupying valuable space. Whether you need to stash utensils, important papers, tissue rolls, or poly bags, it handles it all efficiently. Its odor-sealing design ensures a fresh, clean environment while providing easy access for removing or replacing trash. Compact yet spacious, it blends seamlessly with any decor, making it perfect for placement near dining tables, study corners, or kitchen countertops. Simplify your daily routine with this all-in-one storage and trash solution. ### Why I Recommend It: I recommend the Kitchen Trash Bin because it’s more than just a waste container — it’s a smart, space-saving organizer that enhances both functionality and cleanliness. Its multifunctional design, compact size, and odor-free storage make it ideal for smaller spaces where efficiency matters. It's a practical addition to any modern home.",
-            basePrice: 990.00,
-            originalPrice: 1690.00,
-            category: "Home & Kitchen",
-            images: {
-                "white": imagePaths.products.product_1.product_13,
-                "light_beige": imagePaths.products.product_1.product_110,
-                default: imagePaths.products.product_1.product_13,
-            },
-            thumbnails: [
-                imagePaths.products.product_1.product_19,
-                imagePaths.products.product_1.product_12,
-                imagePaths.products.product_1.product_13,
                 imagePaths.products.product_1.product_11,
-                imagePaths.products.product_1.product_15,
-
-            ],
-            colors: [
-                { name: "Light gray", hex: "#b3b3b5", imageKey: "white" },
-                { name: "Light beige", hex: "#e5d7cd", imageKey: "light_beige" },
-            ],
-            specifications: [
-                { label: "Brand", value: "DPEX" },
-                { label: "Manufacturer", value: "DPEX" },
-                { label: "Color", value: "Light gray & Light beige" },
-                { label: "Model", value: "C-317" },
-                { label: "Material", value: "Plastic" },
-                { label: "Dimension", value: "24*16*26cm, The size of the folded is 24*8*26cm" }
-
-            ],
-            isFeatured: true
-        },
-
-        {
-            id: "product_6",
-            name: "Electric Cleaning Brush for Kitchen",
-            shortDescription: "This versatile brush effortlessly cleans kitchen sinks, Hari Patil, sofas, tiles, meat fat, and Thai glass surfaces.",
-            longDescription: "Introducing a powerful and versatile electronic cleaning brush designed to remove stubborn dirt and grime from every corner of your home or kitchen. Whether you're scrubbing the kitchen sink, Hari Patil, sofas, or tiles, the included Teflon brush makes the job effortless. Built for durability and performance, it features a brushless motor and a sturdy ABS plastic body. The built-in 2000mAh lithium battery offers extended use on a single charge, and USB charging ensures universal convenience. Fully waterproof, this cleaning brush is easy to clean and ready for any mess—wet or dry.",
-            basePrice: 850.00,
-            originalPrice: 1590.00,
-            category: "Home & Kitchen",
-            images: {
-                "off_white": imagePaths.products.product_2.product_24,
-                default: imagePaths.products.product_2.default,
-            },
-            thumbnails: [
-                imagePaths.products.product_2.product_24,
-                imagePaths.products.product_2.product_22,
-                imagePaths.products.product_2.product_21,
-                imagePaths.products.product_2.product_23,
-                imagePaths.products.product_2.product_25,
-
-            ],
-            colors: [
-                { name: "Off white", hex: "#b3b3b5", imageKey: "off_white" },
-            ],
-            specifications: [
-                { label: "Brand", value: "RAYBIN" },
-                { label: "Manufacturer", value: "RAYBIN" },
-                { label: "Color", value: "Off-White" },
-                { label: "Model", value: "RBSKA018-17" },
-                { label: "Material", value: "ABS Plastic" },
-                { label: "Dimension", value: " 17.5*7.4*26cm, weight: 372.5g" },
-
-
-            ],
-            isFeatured: true
-        },
-        {
-            id: "product_7",
-            name: "Trash Bin",
-            shortDescription: "A compact, odor-free, and durable wall-mounted bin that doubles as storage for a clutter-free space.",
-            longDescription: "Kitchen Trash Bin — the smart solution for keeping your kitchen, mess room, or study area organized and clutter-free. This wall-mounted plastic bin is cleverly designed to store both waste and essential items without occupying valuable space. Whether you need to stash utensils, important papers, tissue rolls, or poly bags, it handles it all efficiently. Its odor-sealing design ensures a fresh, clean environment while providing easy access for removing or replacing trash. Compact yet spacious, it blends seamlessly with any decor, making it perfect for placement near dining tables, study corners, or kitchen countertops. Simplify your daily routine with this all-in-one storage and trash solution. ### Why I Recommend It: I recommend the Kitchen Trash Bin because it’s more than just a waste container — it’s a smart, space-saving organizer that enhances both functionality and cleanliness. Its multifunctional design, compact size, and odor-free storage make it ideal for smaller spaces where efficiency matters. It's a practical addition to any modern home.",
-            basePrice: 990.00,
-            originalPrice: 1690.00,
-            category: "Home & Kitchen",
-            images: {
-                "white": imagePaths.products.product_1.product_17,
-                "light_beige": imagePaths.products.product_1.product_110,
-                default: imagePaths.products.product_1.product_17,
-            },
-            thumbnails: [
+                imagePaths.products.product_1.product_12,
+                imagePaths.products.product_1.product_13,
                 imagePaths.products.product_1.product_17,
-                imagePaths.products.product_1.product_12,
-                imagePaths.products.product_1.product_13,
-                imagePaths.products.product_1.product_11,
                 imagePaths.products.product_1.product_15,
 
             ],
@@ -330,38 +149,218 @@ const appData = {
             ],
             isFeatured: true
         },
-
-        {
-            id: "product_8",
-            name: "Electric Cleaning Brush",
-            shortDescription: "This versatile brush effortlessly cleans kitchen sinks, Hari Patil, sofas, tiles, meat fat, and Thai glass surfaces.",
-            longDescription: "Introducing a powerful and versatile electronic cleaning brush designed to remove stubborn dirt and grime from every corner of your home or kitchen. Whether you're scrubbing the kitchen sink, Hari Patil, sofas, or tiles, the included Teflon brush makes the job effortless. Built for durability and performance, it features a brushless motor and a sturdy ABS plastic body. The built-in 2000mAh lithium battery offers extended use on a single charge, and USB charging ensures universal convenience. Fully waterproof, this cleaning brush is easy to clean and ready for any mess—wet or dry.",
-            basePrice: 850.00,
-            originalPrice: 1590.00,
+             {
+            id: "product_3",
+            name: "Lifewit Silverware Drawer Organizer",
+            shortDescription: "A compact, odor-free, and durable wall-mounted bin that doubles as storage for a clutter-free space.",
+            longDescription: "Kitchen Trash Bin — the smart solution for keeping your kitchen, mess room, or study area organized and clutter-free. This wall-mounted plastic bin is cleverly designed to store both waste and essential items without occupying valuable space. Whether you need to stash utensils, important papers, tissue rolls, or poly bags, it handles it all efficiently. Its odor-sealing design ensures a fresh, clean environment while providing easy access for removing or replacing trash. Compact yet spacious, it blends seamlessly with any decor, making it perfect for placement near dining tables, study corners, or kitchen countertops. Simplify your daily routine with this all-in-one storage and trash solution. ### Why I Recommend It: I recommend the Kitchen Trash Bin because it’s more than just a waste container — it’s a smart, space-saving organizer that enhances both functionality and cleanliness. Its multifunctional design, compact size, and odor-free storage make it ideal for smaller spaces where efficiency matters. It's a practical addition to any modern home.",
+            basePrice: 990.00,
+            originalPrice: 1690.00,
             category: "Home & Kitchen",
             images: {
-                "off_white": imagePaths.products.product_2.product_24,
-                default: imagePaths.products.product_2.product_24,
+                "white": imagePaths.products.product_1.product_11,
+                "light_beige": imagePaths.products.product_1.product_110,
+                default: imagePaths.products.product_1.default,
             },
             thumbnails: [
-                imagePaths.products.product_2.product_26,
-                imagePaths.products.product_2.product_22,
-                imagePaths.products.product_2.product_21,
-                imagePaths.products.product_2.product_23,
-                imagePaths.products.product_2.product_25,
+                imagePaths.products.product_1.product_11,
+                imagePaths.products.product_1.product_12,
+                imagePaths.products.product_1.product_13,
+                imagePaths.products.product_1.product_17,
+                imagePaths.products.product_1.product_15,
 
             ],
             colors: [
-                { name: "Off white", hex: "#b3b3b5", imageKey: "off_white" },
+                { name: "Light gray", hex: "#b3b3b5", imageKey: "white" },
+                { name: "Light beige", hex: "#e5d7cd", imageKey: "light_beige" },
             ],
             specifications: [
-                { label: "Brand", value: "RAYBIN" },
-                { label: "Manufacturer", value: "RAYBIN" },
-                { label: "Color", value: "Off-White" },
-                { label: "Model", value: "RBSKA018-17" },
-                { label: "Material", value: "ABS Plastic" },
-                { label: "Dimension", value: " 17.5*7.4*26cm, weight: 372.5g" },
+                { label: "Brand", value: "DPEX" },
+                { label: "Manufacturer", value: "DPEX" },
+                { label: "Color", value: "Light gray & Light beige" },
+                { label: "Model", value: "C-317" },
+                { label: "Material", value: "Plastic" },
+                { label: "Dimension", value: "24*16*26cm, The size of the folded is 24*8*26cm" }
 
+            ],
+            isFeatured: true
+        },
+             {
+            id: "product_4",
+            name: "25 PCS Plastic Drawer Organizer",
+            shortDescription: "A compact, odor-free, and durable wall-mounted bin that doubles as storage for a clutter-free space.",
+            longDescription: "Kitchen Trash Bin — the smart solution for keeping your kitchen, mess room, or study area organized and clutter-free. This wall-mounted plastic bin is cleverly designed to store both waste and essential items without occupying valuable space. Whether you need to stash utensils, important papers, tissue rolls, or poly bags, it handles it all efficiently. Its odor-sealing design ensures a fresh, clean environment while providing easy access for removing or replacing trash. Compact yet spacious, it blends seamlessly with any decor, making it perfect for placement near dining tables, study corners, or kitchen countertops. Simplify your daily routine with this all-in-one storage and trash solution. ### Why I Recommend It: I recommend the Kitchen Trash Bin because it’s more than just a waste container — it’s a smart, space-saving organizer that enhances both functionality and cleanliness. Its multifunctional design, compact size, and odor-free storage make it ideal for smaller spaces where efficiency matters. It's a practical addition to any modern home.",
+            basePrice: 990.00,
+            originalPrice: 1690.00,
+            category: "Home & Kitchen",
+            images: {
+                "white": imagePaths.products.product_1.product_11,
+                "light_beige": imagePaths.products.product_1.product_110,
+                default: imagePaths.products.product_1.default,
+            },
+            thumbnails: [
+                imagePaths.products.product_1.product_11,
+                imagePaths.products.product_1.product_12,
+                imagePaths.products.product_1.product_13,
+                imagePaths.products.product_1.product_17,
+                imagePaths.products.product_1.product_15,
+
+            ],
+            colors: [
+                { name: "Light gray", hex: "#b3b3b5", imageKey: "white" },
+                { name: "Light beige", hex: "#e5d7cd", imageKey: "light_beige" },
+            ],
+            specifications: [
+                { label: "Brand", value: "DPEX" },
+                { label: "Manufacturer", value: "DPEX" },
+                { label: "Color", value: "Light gray & Light beige" },
+                { label: "Model", value: "C-317" },
+                { label: "Material", value: "Plastic" },
+                { label: "Dimension", value: "24*16*26cm, The size of the folded is 24*8*26cm" }
+
+            ],
+            isFeatured: true
+        },
+             {
+            id: "product_5",
+            name: "Scotch-Brite Sponge Cloth Wipe",
+            shortDescription: "A compact, odor-free, and durable wall-mounted bin that doubles as storage for a clutter-free space.",
+            longDescription: "Kitchen Trash Bin — the smart solution for keeping your kitchen, mess room, or study area organized and clutter-free. This wall-mounted plastic bin is cleverly designed to store both waste and essential items without occupying valuable space. Whether you need to stash utensils, important papers, tissue rolls, or poly bags, it handles it all efficiently. Its odor-sealing design ensures a fresh, clean environment while providing easy access for removing or replacing trash. Compact yet spacious, it blends seamlessly with any decor, making it perfect for placement near dining tables, study corners, or kitchen countertops. Simplify your daily routine with this all-in-one storage and trash solution. ### Why I Recommend It: I recommend the Kitchen Trash Bin because it’s more than just a waste container — it’s a smart, space-saving organizer that enhances both functionality and cleanliness. Its multifunctional design, compact size, and odor-free storage make it ideal for smaller spaces where efficiency matters. It's a practical addition to any modern home.",
+            basePrice: 990.00,
+            originalPrice: 1690.00,
+            category: "Home & Kitchen",
+            images: {
+                "white": imagePaths.products.product_1.product_11,
+                "light_beige": imagePaths.products.product_1.product_110,
+                default: imagePaths.products.product_1.default,
+            },
+            thumbnails: [
+                imagePaths.products.product_1.product_11,
+                imagePaths.products.product_1.product_12,
+                imagePaths.products.product_1.product_13,
+                imagePaths.products.product_1.product_17,
+                imagePaths.products.product_1.product_15,
+
+            ],
+            colors: [
+                { name: "Light gray", hex: "#b3b3b5", imageKey: "white" },
+                { name: "Light beige", hex: "#e5d7cd", imageKey: "light_beige" },
+            ],
+            specifications: [
+                { label: "Brand", value: "DPEX" },
+                { label: "Manufacturer", value: "DPEX" },
+                { label: "Color", value: "Light gray & Light beige" },
+                { label: "Model", value: "C-317" },
+                { label: "Material", value: "Plastic" },
+                { label: "Dimension", value: "24*16*26cm, The size of the folded is 24*8*26cm" }
+
+            ],
+            isFeatured: true
+        },
+            {
+            id: "product_6",
+            name: "Ultrean Digital Food Scale",
+            shortDescription: "A compact, odor-free, and durable wall-mounted bin that doubles as storage for a clutter-free space.",
+            longDescription: "Kitchen Trash Bin — the smart solution for keeping your kitchen, mess room, or study area organized and clutter-free. This wall-mounted plastic bin is cleverly designed to store both waste and essential items without occupying valuable space. Whether you need to stash utensils, important papers, tissue rolls, or poly bags, it handles it all efficiently. Its odor-sealing design ensures a fresh, clean environment while providing easy access for removing or replacing trash. Compact yet spacious, it blends seamlessly with any decor, making it perfect for placement near dining tables, study corners, or kitchen countertops. Simplify your daily routine with this all-in-one storage and trash solution. ### Why I Recommend It: I recommend the Kitchen Trash Bin because it’s more than just a waste container — it’s a smart, space-saving organizer that enhances both functionality and cleanliness. Its multifunctional design, compact size, and odor-free storage make it ideal for smaller spaces where efficiency matters. It's a practical addition to any modern home.",
+            basePrice: 990.00,
+            originalPrice: 1690.00,
+            category: "Home & Kitchen",
+            images: {
+                "white": imagePaths.products.product_1.product_11,
+                "light_beige": imagePaths.products.product_1.product_110,
+                default: imagePaths.products.product_1.default,
+            },
+            thumbnails: [
+                imagePaths.products.product_1.product_11,
+                imagePaths.products.product_1.product_12,
+                imagePaths.products.product_1.product_13,
+                imagePaths.products.product_1.product_17,
+                imagePaths.products.product_1.product_15,
+
+            ],
+            colors: [
+                { name: "Light gray", hex: "#b3b3b5", imageKey: "white" },
+                { name: "Light beige", hex: "#e5d7cd", imageKey: "light_beige" },
+            ],
+            specifications: [
+                { label: "Brand", value: "DPEX" },
+                { label: "Manufacturer", value: "DPEX" },
+                { label: "Color", value: "Light gray & Light beige" },
+                { label: "Model", value: "C-317" },
+                { label: "Material", value: "Plastic" },
+                { label: "Dimension", value: "24*16*26cm, The size of the folded is 24*8*26cm" }
+
+            ],
+            isFeatured: true
+        },
+            {
+            id: "product_7",
+            name: "Smart Kitchen Trash Bin",
+            shortDescription: "A compact, odor-free, and durable wall-mounted bin that doubles as storage for a clutter-free space.",
+            longDescription: "Kitchen Trash Bin — the smart solution for keeping your kitchen, mess room, or study area organized and clutter-free. This wall-mounted plastic bin is cleverly designed to store both waste and essential items without occupying valuable space. Whether you need to stash utensils, important papers, tissue rolls, or poly bags, it handles it all efficiently. Its odor-sealing design ensures a fresh, clean environment while providing easy access for removing or replacing trash. Compact yet spacious, it blends seamlessly with any decor, making it perfect for placement near dining tables, study corners, or kitchen countertops. Simplify your daily routine with this all-in-one storage and trash solution. ### Why I Recommend It: I recommend the Kitchen Trash Bin because it’s more than just a waste container — it’s a smart, space-saving organizer that enhances both functionality and cleanliness. Its multifunctional design, compact size, and odor-free storage make it ideal for smaller spaces where efficiency matters. It's a practical addition to any modern home.",
+            basePrice: 990.00,
+            originalPrice: 1690.00,
+            category: "Home & Kitchen",
+            images: {
+                "white": imagePaths.products.product_1.product_11,
+                "light_beige": imagePaths.products.product_1.product_110,
+                default: imagePaths.products.product_1.default,
+            },
+            thumbnails: [
+                imagePaths.products.product_1.product_11,
+                imagePaths.products.product_1.product_12,
+                imagePaths.products.product_1.product_13,
+                imagePaths.products.product_1.product_17,
+                imagePaths.products.product_1.product_15,
+
+            ],
+            colors: [
+                { name: "Light gray", hex: "#b3b3b5", imageKey: "white" },
+                { name: "Light beige", hex: "#e5d7cd", imageKey: "light_beige" },
+            ],
+            specifications: [
+                { label: "Brand", value: "DPEX" },
+                { label: "Manufacturer", value: "DPEX" },
+                { label: "Color", value: "Light gray & Light beige" },
+                { label: "Model", value: "C-317" },
+                { label: "Material", value: "Plastic" },
+                { label: "Dimension", value: "24*16*26cm, The size of the folded is 24*8*26cm" }
+
+            ],
+            isFeatured: true
+        },
+            {
+            id: "product_8",
+            name: "PAUDIN Chef Knife",
+            shortDescription: "A compact, odor-free, and durable wall-mounted bin that doubles as storage for a clutter-free space.",
+            longDescription: "Kitchen Trash Bin — the smart solution for keeping your kitchen, mess room, or study area organized and clutter-free. This wall-mounted plastic bin is cleverly designed to store both waste and essential items without occupying valuable space. Whether you need to stash utensils, important papers, tissue rolls, or poly bags, it handles it all efficiently. Its odor-sealing design ensures a fresh, clean environment while providing easy access for removing or replacing trash. Compact yet spacious, it blends seamlessly with any decor, making it perfect for placement near dining tables, study corners, or kitchen countertops. Simplify your daily routine with this all-in-one storage and trash solution. ### Why I Recommend It: I recommend the Kitchen Trash Bin because it’s more than just a waste container — it’s a smart, space-saving organizer that enhances both functionality and cleanliness. Its multifunctional design, compact size, and odor-free storage make it ideal for smaller spaces where efficiency matters. It's a practical addition to any modern home.",
+            basePrice: 990.00,
+            originalPrice: 1690.00,
+            category: "Home & Kitchen",
+            images: {
+                "white": imagePaths.products.product_1.product_11,
+                "light_beige": imagePaths.products.product_1.product_110,
+                default: imagePaths.products.product_1.default,
+            },
+            thumbnails: [
+                imagePaths.products.product_1.product_11,
+                imagePaths.products.product_1.product_12,
+                imagePaths.products.product_1.product_13,
+                imagePaths.products.product_1.product_17,
+                imagePaths.products.product_1.product_15,
+
+            ],
+            colors: [
+                { name: "Light gray", hex: "#b3b3b5", imageKey: "white" },
+                { name: "Light beige", hex: "#e5d7cd", imageKey: "light_beige" },
+            ],
+            specifications: [
+                { label: "Brand", value: "DPEX" },
+                { label: "Manufacturer", value: "DPEX" },
+                { label: "Color", value: "Light gray & Light beige" },
+                { label: "Model", value: "C-317" },
+                { label: "Material", value: "Plastic" },
+                { label: "Dimension", value: "24*16*26cm, The size of the folded is 24*8*26cm" }
 
             ],
             isFeatured: true
