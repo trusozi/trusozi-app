@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="product-page-title">Product - Loyapy</title>
+    <link rel="icon" href="assets/apps/logo_without_bg.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/apps/logo_without_bg.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out;
+        }
+
+        .btn-secondary {
+            @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out;
+        }
+
+        .icon-link {
+            @apply text-gray-600 hover:text-blue-600 transition duration-300;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+            /* Hidden by default */
+        }
+
+        /* General mobile layout adjustments for the main header flex container */
+        @media (max-width: 768px) {
+
+            /* Ensure the inner flex container wraps and controls spacing */
+            .sticky-header .flex.justify-between.items-center {
+                flex-wrap: wrap;
+                /* Allow items to wrap onto the next line */
+                align-items: center;
+                /* Vertically align items */
+                gap: 1rem 0;
+                /* Add vertical gap if items wrap, no horizontal gap at this level */
+            }
+
+            /* Hide desktop navigation on mobile */
+            .desktop-nav {
+                display: none;
+            }
+
+            /* Show mobile menu button container */
+            .mobile-menu-button-container {
+                display: flex;
+                /* Make it visible */
+                order: 4;
+                /* Place it last in the visual order (after search if it wraps) */
+                flex-shrink: 0;
+                /* Prevent it from shrinking */
+            }
+
+            /* Adjust search bar for mobile */
+            .search-bar-container {
+                width: 100%;
+                /* Take full width of its row */
+                order: 3;
+                /* Position it after logo and icons group */
+                min-width: unset;
+                /* Remove desktop min-width constraint */
+                margin-top: 0.5rem;
+                /* Small vertical spacing if it wraps to a new line */
+            }
+
+            .search-bar-container input[type="search"] {
+                width: 100%;
+                /* Ensure input field takes full width of its container */
+            }
+
+            /* Group for user and cart icons */
+            .header-icons-mobile-group {
+                display: flex;
+                /* Make it a flex container */
+                gap: 1.25rem;
+                /* Space between user and cart icons (adjust as needed) */
+                order: 2;
+                /* Position it after the logo */
+                flex-shrink: 0;
+                /* Prevent it from shrinking */
+            }
+
+            /* Logo specific adjustments for mobile */
+            #header-logo {
+                flex-shrink: 0;
+                /* Prevent logo from shrinking */
+                order: 1;
+                /* Ensure logo is first */
+            }
+
+            /* Ensure search results container overlays correctly */
+            #searchResultsContainer {
+                width: calc(100% - 2rem);
+                /* Account for padding in the main container if it's placed inside */
+                left: 1rem;
+                /* Adjust if it's not full width to align with input */
+                right: 1rem;
+            }
+        }
+
+
+        .search-bar-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            /* Default width for desktop */
+            min-width: 250px;
+        }
+
+        .search-bar-container input[type="search"] {
+            padding-right: 2.5rem;
+            /* Space for the icon */
+            flex-grow: 1;
+            /* Allow input to fill available space in its container */
+        }
+
+        @media (min-width: 768px) {
+
+            /* md breakpoint */
+            .search-bar-container input[type="search"] {
+                min-width: 350px;
+                /* Wider search bar on larger screens */
+            }
+        }
+
+        .search-icon-wrapper {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: #9ca3af;
+            /* Tailwind gray-400 */
+        }
+
+        .search-icon-wrapper i {
+            transition: color 0.3s ease;
+        }
+
+        .search-bar-container input[type="search"]:focus+.search-icon-wrapper i {
+            color: #3b82f6;
+            /* Tailwind blue-500 */
+        }
+
+        /* Search Results Overlay */
+        #searchResultsContainer {
+            position: absolute;
+            top: 100%;
+            /* Position below the search bar */
+            left: 0;
+            width: 100%;
+            /* Full width of its parent .search-bar-container */
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            /* Tailwind gray-200 */
+            border-top: none;
+            border-radius: 0 0 0.5rem 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 40;
+            /* Below sticky header but above other content */
+            display: none;
+            /* Hidden by default */
+        }
+
+        #searchResultsContainer.active {
+            display: block;
+            /* Show when active */
+        }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f3f4f6;
+            /* Tailwind gray-100 */
+            transition: background-color 0.2s ease;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background-color: #f9fafb;
+            /* Tailwind gray-50 */
+        }
+
+        .search-result-item img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            margin-right: 1rem;
+            border-radius: 0.25rem;
+        }
+
+        .search-result-item h4 {
+            font-weight: 500;
+            color: #1f2937;
+            /* Tailwind gray-800 */
+            margin-bottom: 0.25rem;
+        }
+
+        .search-result-item p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            /* Tailwind gray-500 */
+        }
+
+        /* --- GLOBAL TOAST NOTIFICATION STYLES --- */
+        #toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+
+        .toast-message {
+            background-color: #16a34a;
+            /* Tailwind's green-600 */
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            /* px-4 py-2 */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            /* shadow-lg */
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            /* gap-2 */
+            pointer-events: all;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            min-width: 200px;
+            max-width: 300px;
+        }
+
+        .toast-message.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast-message.hide {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        /* --- END GLOBAL TOAST NOTIFICATION STYLES --- */
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+    <div id="toast-container"></div>
+
+
+    <div class="bg-gray-800 text-white text-xs py-2 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <div id="top-utility-links">
+            </div>
+            <div>
+                <span id="free-shipping-message"></span>
+            </div>
+        </div>
+    </div>
+
+    <header id="mainHeader" class="sticky-header shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="index.html" class="text-3xl font-bold text-blue-600 hidden md:block"
+                    id="header-logo">YourLogo</a>
+
+                <nav class="hidden md:flex space-x-6 items-center desktop-nav" id="desktop-nav-links">
+                </nav>
+
+                <div class="flex items-center space-x-4 w-full md:w-auto md:flex-grow-0">
+
+                    <div class="relative search-bar-container">
+                        <input type="search" id="searchInput" placeholder="Search products..."
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        <span class="search-icon-wrapper" id="searchIcon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <div id="searchResultsContainer">
+                        </div>
+                    </div>
+                    <div class="header-icons-mobile-group pr-4">
+
+                        <a href="cart.html" class="icon-link text-xl relative">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cart-count"
+                                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+
+
+                    <div class="md:hidden mobile-menu-button-container">
+                        <button id="mobileMenuButton" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                            <i class="fas fa-bars text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="mobile-menu md:hidden bg-white shadow-lg absolute w-full">
+            <nav class="flex flex-col space-y-2 p-4" id="mobile-nav-links">
+                <hr class="my-2">
+                <a href="#" class="block py-2 px-3 text-gray-600 hover:bg-blue-50 rounded-md">My Account</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <nav class="text-sm text-gray-500 mb-6" aria-label="breadcrumb">
+            <ol class="list-none p-0 inline-flex" id="breadcrumb-links">
+            </ol>
+        </nav>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 flex flex-col lg:flex-row gap-8"
+            id="product-details-container">
+            <div class="lg:w-1/2 flex flex-col items-center">
+                <div class="w-full max-w-lg mb-4">
+                    <img id="mainProductImage" src="" alt="Product Image"
+                        class="w-full h-auto object-contain rounded-lg">
+                </div>
+                <div class="flex gap-3 overflow-x-auto pb-2" id="thumbnail-gallery">
+                </div>
+            </div>
+
+            <div class="lg:w-1/2">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3" id="product-name"></h1>
+                <p class="text-gray-600 text-lg mb-4" id="product-short-description"></p>
+
+                <div class="flex items-baseline mb-6">
+                    <span class="text-4xl font-extrabold text-blue-600 mr-2" id="product-current-price"></span>
+                    <span class="text-lg text-gray-500 line-through" id="product-original-price"></span>
+                </div>
+
+                <div class="mb-6" id="color-options-container">
+                    <p class="font-semibold text-gray-700 mb-2">Color: <span id="selectedColorText"
+                            class="font-normal"></span></p>
+                    <div class="flex gap-3" id="color-selector">
+                    </div>
+                </div>
+
+                <div class="mb-6" id="storage-options-container" style="display: none;">
+                    <p class="font-semibold text-gray-700 mb-2">Storage: <span id="selectedStorageText"
+                            class="font-normal"></span></p>
+                    <div class="flex gap-3" id="storage-selector">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 mb-8">
+                    <label for="quantity" class="font-semibold text-gray-700">Quantity:</label>
+                    <input type="number" id="quantity" value="1" min="1"
+                        class="w-20 px-3 py-2 border border-gray-300 rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+
+                <button class="text-left border border-gray-300 px-4 py-2 text-lg add-to-cart-button"
+                    id="add-to-cart-btn">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 mt-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Product Overview</h2>
+            <p class="text-gray-700 mb-6" id="product-long-description"></p>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Key Features:</h3>
+            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2" id="key-features-list">
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Technical Specifications:</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                    <tbody class="divide-y divide-gray-200" id="specifications-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <section class="py-12">
+            <h2 class="text-2xl font-bold text-center mb-8">You Might Also Like</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="related-products-container">
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Shop</h5>
+                    <ul class="space-y-2" id="footer-shop-links">
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Customer Service</h5>
+                    <ul class="space-y-2" id="footer-customer-service-links">
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Our Company</h5>
+                    <ul class="space-y-2" id="footer-company-links">
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Connect With Us</h5>
+                    <div class="flex space-x-4 mb-6">
+                        <a href="https://www.facebook.com/share/19Dbj1JNVL"
+                            class="text-gray-400 hover:text-white text-2xl transition duration-300"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/loyapy?t=AZ4Sp8zWW5G9XaWUPd8csQ&s=09"
+                            class="text-gray-400 hover:text-white text-2xl transition duration-300"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/loyapy24?igsh=dm9wYTF1Y2pqY2J2"
+                            class="text-gray-400 hover:text-white text-2xl transition duration-300"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/share/19Dbj1JNVL"
+                            class="text-gray-400 hover:text-white text-2xl transition duration-300"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/share/19Dbj1JNVL"
+                            class="text-gray-400 hover:text-white text-2xl transition duration-300"><i
+                                class="fab fa-youtube"></i></a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 text-center">
+                <p class="text-sm">&copy; <span id="currentYearFooter"></span> <span id="footer-company-name"></span>.
+                    All Rights Reserved.</p>
+                <p class="text-xs mt-1" id="footer-designed-by"></p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50"></div>
+
+    <script src="imagePaths.js"></script>
+    <script src="data.js"></script>
+    <script>
+        // --- Common Functions for all pages ---
+        function getCartItems() {
+            try {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                return cart;
+            } catch (e) {
+                console.error("Error parsing cart from localStorage:", e);
+                return [];
+            }
+        }
+
+        function updateCartCount() {
+            const cart = getCartItems();
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCountElement.textContent = totalItems;
+            }
+        }
+
+        function saveCartItems(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function addToCart(item) {
+            let cart = getCartItems();
+            const existingItemIndex = cart.findIndex(cartItem =>
+                cartItem.id === item.id &&
+                cartItem.selectedColor === item.selectedColor &&
+                cartItem.selectedStorage === item.selectedStorage
+            );
+
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += item.quantity;
+                cart[existingItemIndex].singleProductTotal = cart[existingItemIndex].price * cart[existingItemIndex].quantity;
+            } else {
+                cart.push(item);
+            }
+            saveCartItems(cart);
+        }
+
+        // --- GLOBAL TOAST NOTIFICATION FUNCTION ---
+        function showToast(message, duration = 3000) {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                console.error("Toast container not found!");
+                return;
+            }
+
+            const toast = document.createElement('div');
+            toast.classList.add('toast-message');
+            toast.innerHTML = `<i class="fas fa-check-circle mr-2"></i> ${message}`; // Add a checkmark icon
+
+            toastContainer.appendChild(toast);
+
+            // Trigger animation
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10); // Small delay to allow CSS to register initial state
+
+            // Dismiss after duration
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.classList.add('hide'); // Add hide class for exit animation
+                // Remove element after transition
+                toast.addEventListener('transitionend', () => {
+                    toast.remove();
+                }, { once: true }); // Ensure listener is removed after one use
+            }, duration);
+        }
+
+        // --- Search Functionality ---
+        const searchInput = document.getElementById('searchInput');
+        const searchResultsContainer = document.getElementById('searchResultsContainer');
+        const searchIcon = document.getElementById('searchIcon'); // Get the search icon element
+
+        let searchTimeout;
+
+        function displaySearchResults(results) {
+            searchResultsContainer.innerHTML = ''; // Clear previous results
+
+            if (results.length === 0) {
+                searchResultsContainer.classList.remove('active');
+                return;
+            }
+
+            searchResultsContainer.classList.add('active'); // Show results container
+
+            results.forEach(product => {
+                const resultItem = document.createElement('a');
+                resultItem.href = `product.html?id=${product.id}`;
+                resultItem.classList.add('search-result-item');
+                resultItem.innerHTML = `
+                    <img src="${product.images.default || product.images[Object.keys(product.images)[0]]}" alt="${product.name}">
+                    <div>
+                        <h4>${product.name}</h4>
+                        <p>${appData.company.currencySymbol}${product.basePrice.toFixed(2)}</p>
+                    </div>
+                `;
+                searchResultsContainer.appendChild(resultItem);
+            });
+        }
+
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+
+            if (query.length < 2) { // Require at least 2 characters to start searching
+                displaySearchResults([]);
+                return;
+            }
+
+            const filteredProducts = appData.products.filter(product =>
+                product.name.toLowerCase().includes(query) ||
+                product.shortDescription.toLowerCase().includes(query) ||
+                product.category.toLowerCase().includes(query)
+            );
+
+            displaySearchResults(filteredProducts);
+        }
+
+        // Debounce search input
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(performSearch, 300); // Wait 300ms after last keystroke
+        });
+
+        // Hide search results when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!searchInput.contains(event.target) && !searchResultsContainer.contains(event.target)) {
+                searchResultsContainer.classList.remove('active');
+            }
+        });
+
+        // Show results immediately on focus if there's existing text
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value.length >= 2) {
+                performSearch();
+            }
+        });
+
+
+        function populateStaticContent() {
+            // Top Bar
+            document.getElementById('free-shipping-message').textContent = `Free Delivery Over ${appData.company.freeShippingThreshold}${appData.company.currencySymbol}`;
+
+            // Header
+            document.getElementById('header-logo').textContent = appData.company.logoText;
+            document.getElementById('header-logo').href = "index.html"; // Ensure logo links to home
+
+
+            const desktopNavLinksContainer = document.getElementById('desktop-nav-links');
+            if (desktopNavLinksContainer) {
+                desktopNavLinksContainer.innerHTML = appData.navLinks.map(link =>
+                    `<a href="${link.href}" class="text-gray-600 hover:text-blue-600 transition duration-300">${link.name}</a>`
+                ).join('');
+            }
+
+            const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
+            if (mobileNavLinksContainer) {
+                // Clear existing and add main nav links
+                mobileNavLinksContainer.innerHTML = appData.navLinks.map(link =>
+                    `<a href="${link.href}" class="block py-2 px-3 text-gray-600 hover:bg-blue-50 rounded-md">${link.name}</a>`
+                ).join('');
+                // Add separator and static "My Account"
+                mobileNavLinksContainer.innerHTML += '<hr class="my-2">';
+                mobileNavLinksContainer.innerHTML += '<a href="#" class="block py-2 px-3 text-gray-600 hover:bg-blue-50 rounded-md">My Account</a>';
+
+            }
+
+            // Footer
+            const currentYearElements = document.querySelectorAll('[id^="currentYear"]');
+            currentYearElements.forEach(el => el.textContent = new Date().getFullYear());
+            const footerCompanyNames = document.querySelectorAll('#footer-company-name');
+            footerCompanyNames.forEach(el => el.textContent = appData.company.name);
+            const footerDesignedByElements = document.querySelectorAll('#footer-designed-by');
+            // Ensure appData.company.footerDesignedBy exists in your data.js
+            footerDesignedByElements.forEach(el => el.textContent = appData.company.footerDesignedBy || "Designed by Your Company");
+
+
+            const footerShopLinksContainer = document.getElementById('footer-shop-links');
+            if (footerShopLinksContainer) {
+                footerShopLinksContainer.innerHTML = appData.footerShopLinks.map(link =>
+                    `<li><a href="${link.href}" class="hover:text-blue-400 transition duration-300">${link.name}</a></li>`
+                ).join('');
+            }
+
+            const footerCustomerServiceLinksContainer = document.getElementById('footer-customer-service-links');
+            if (footerCustomerServiceLinksContainer) {
+                footerCustomerServiceLinksContainer.innerHTML = appData.footerCustomerServiceLinks.map(link =>
+                    `<li><a href="${link.href}" class="hover:text-blue-400 transition duration-300">${link.name}</a></li>`
+                ).join('');
+            }
+
+            const footerCompanyLinksContainer = document.getElementById('footer-company-links');
+            if (footerCompanyLinksContainer) {
+                footerCompanyLinksContainer.innerHTML = appData.footerCompanyLinks.map(link =>
+                    `<li><a href="${link.href}" class="hover:text-blue-400 transition duration-300">${link.name}</a></li>`
+                ).join('');
+            }
+        }
+
+
+        // --- Product Page specific JS ---
+        function getProductIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        function populateProductPage(productId) {
+            const product = appData.products.find(p => p.id === productId);
+
+            if (!product) {
+                document.getElementById('product-details-container').innerHTML = `<p class="text-center text-red-500 text-xl py-20">Product not found.</p>`;
+                document.getElementById('product-page-title').textContent = "Product Not Found";
+                // Hide other sections if product not found
+                document.querySelector('main > div:nth-of-type(2)').style.display = 'none'; // Product Overview section
+                document.querySelector('section.py-12').style.display = 'none'; // You Might Also Like section
+                return;
+            }
+
+            // Update Page Title
+            document.getElementById('product-page-title').textContent = `${product.name} - ${appData.company.name}`;
+
+            // Breadcrumb
+            const breadcrumbLinks = document.getElementById('breadcrumb-links');
+            breadcrumbLinks.innerHTML = `
+                <li class="flex items-center">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800">Home</a>
+                    <span class="mx-2">/</span>
+                </li>
+                <li class="flex items-center">
+                    <a href="#" class="text-blue-600 hover:text-blue-800">${product.category}</a>
+                    <span class="mx-2">/</span>
+                </li>
+                <li class="flex items-center text-gray-700" aria-current="page">${product.name}</li>
+            `;
+
+            // Product Main Details
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-short-description').textContent = product.shortDescription;
+            // Removed price setting here, it's now handled by updatePrice()
+
+            const originalPriceElement = document.getElementById('product-original-price');
+            if (product.originalPrice) {
+                originalPriceElement.textContent = `${appData.company.currencySymbol}${product.originalPrice.toFixed(2)}`;
+                originalPriceElement.style.display = 'inline-block';
+            } else {
+                originalPriceElement.style.display = 'none';
+            }
+
+            // Image Gallery
+            const mainProductImage = document.getElementById('mainProductImage');
+            const thumbnailGallery = document.getElementById('thumbnail-gallery');
+            const selectedColorText = document.getElementById('selectedColorText');
+            const colorSelector = document.getElementById('color-selector');
+            const storageOptionsContainer = document.getElementById('storage-options-container'); // Get storage container
+            const storageSelector = document.getElementById('storage-selector'); // Get storage selector div
+            const selectedStorageText = document.getElementById('selectedStorageText'); // Get storage text span
+
+            // Set initial image, color, and storage
+            let defaultColor = product.colors && product.colors.length > 0 ? product.colors[0] : null;
+            let defaultImage = product.images.default || (defaultColor ? product.images[defaultColor.imageKey] : null) || (Object.keys(product.images).length > 0 ? product.images[Object.keys(product.images)[0]] : ''); // Fallback for images
+            let defaultStorage = product.storageOptions && product.storageOptions.length > 0 ? product.storageOptions[0] : null;
+
+            mainProductImage.src = defaultImage;
+
+            let currentSelectedColor = defaultColor ? defaultColor.name : null;
+            if (defaultColor) {
+                selectedColorText.textContent = defaultColor.name;
+            } else {
+                document.getElementById('color-options-container').style.display = 'none';
+            }
+
+            let currentSelectedStorage = defaultStorage ? defaultStorage.capacity : null;
+            let currentSelectedStoragePriceModifier = defaultStorage ? defaultStorage.priceModifier : 0;
+
+            if (defaultStorage) {
+                selectedStorageText.textContent = defaultStorage.capacity;
+                storageOptionsContainer.style.display = 'block'; // Show storage container
+            } else {
+                storageOptionsContainer.style.display = 'none'; // Hide storage container
+            }
+
+
+            // Populate thumbnails
+            if (product.thumbnails && product.thumbnails.length > 0) {
+                thumbnailGallery.innerHTML = product.thumbnails.map((imgSrc, index) => `
+                    <img src="${imgSrc}" alt="Thumbnail ${index + 1}" class="thumbnail-img w-20 h-20 object-cover rounded-md ${imgSrc === defaultImage ? 'active' : ''}" data-image-key="${Object.keys(product.images).find(key => product.images[key] === imgSrc) || ''}">
+                `).join('');
+            } else {
+                thumbnailGallery.style.display = 'none'; // Hide if no thumbnails
+            }
+
+            // Populate color options
+            if (product.colors && product.colors.length > 0) {
+                colorSelector.innerHTML = product.colors.map((color, index) => `
+                    <div class="color-option ${color.name === currentSelectedColor ? 'active' : ''}" style="background-color: ${color.hex};" data-color-name="${color.name}" data-image-key="${color.imageKey}" title="${color.name}"></div>
+                `).join('');
+            } else {
+                document.getElementById('color-options-container').style.display = 'none';
+            }
+
+            // Populate storage options
+            if (product.storageOptions && product.storageOptions.length > 0) {
+                storageSelector.innerHTML = product.storageOptions.map((storage, index) => `
+                    <button class="btn-secondary storage-option ${storage.capacity === currentSelectedStorage ? 'selected' : ''}" data-capacity="${storage.capacity}" data-price-modifier="${storage.priceModifier}">
+                        ${storage.capacity}
+                    </button>
+                `).join('');
+                storageOptionsContainer.style.display = 'block'; // Ensure container is visible
+            } else {
+                storageOptionsContainer.style.display = 'none'; // Hide container if no storage options
+            }
+
+
+            // Product Overview and Specifications
+            document.getElementById('product-long-description').textContent = product.longDescription || product.shortDescription;
+
+            const keyFeaturesList = document.getElementById('key-features-list');
+            if (product.keyFeatures && product.keyFeatures.length > 0) {
+                keyFeaturesList.innerHTML = product.keyFeatures.map(feature => `<li><strong>${feature.split(':')[0]}:</strong> ${feature.split(':')[1] || ''}</li>`).join('');
+            } else {
+                keyFeaturesList.innerHTML = `<li>${product.shortDescription}</li>`;
+            }
+
+            const specificationsTableBody = document.getElementById('specifications-table-body');
+            if (product.specifications && product.specifications.length > 0) {
+                specificationsTableBody.innerHTML = product.specifications.map(spec => `
+                    <tr>
+                        <td class="px-6 py-3 font-semibold text-gray-700">${spec.label}</td>
+                        <td class="px-6 py-3 text-gray-600">${spec.value}</td>
+                    </tr>
+                `).join('');
+            } else {
+                specificationsTableBody.closest('table').style.display = 'none'; // Hide table if no specs
+                specificationsTableBody.parentElement.previousElementSibling.style.display = 'none'; // Hide "Technical Specifications" heading
+            }
+
+            // Related Products (simplified for now, just showing other products)
+            const relatedProductsContainer = document.getElementById('related-products-container');
+            // Filter by category and exclude current product, take first 4, then shuffle for variety
+            const relatedProducts = appData.products
+                .filter(p => p.id !== productId && p.category === product.category)
+                .sort(() => 0.5 - Math.random()) // Shuffle for variety
+                .slice(0, 4);
+
+            if (relatedProducts.length > 0) {
+                relatedProductsContainer.innerHTML = relatedProducts.map(relatedP => `
+                    <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden group">
+                        <a href="product.html?id=${relatedP.id}">
+                            <img src="${relatedP.images.default || relatedP.images[Object.keys(relatedP.images)[0]]}" alt="${relatedP.name}" class="w-full h-48 object-cover">
+                        </a>
+                        <div class="p-4">
+                            <h3 class="text-md font-semibold text-gray-800 mb-1 truncate group-hover:text-blue-600">
+                                <a href="product.html?id=${relatedP.id}">${relatedP.name}</a>
+                            </h3>
+                            <p class="text-sm text-gray-600 mb-2">${appData.company.currencySymbol}${relatedP.basePrice.toFixed(2)}</p>
+                            <button class="w-full add-to-cart-button text-xs add-to-cart-btn-related" data-product-id="${relatedP.id}">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Add event listeners for "Add to Cart" buttons on related products
+                document.querySelectorAll('.add-to-cart-btn-related').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const relatedProductId = event.target.dataset.productId;
+                        const relatedProduct = appData.products.find(p => p.id === relatedProductId);
+                        if (relatedProduct) {
+                            // Determine default color and storage for related product if not specified
+                            const relatedSelectedColor = relatedProduct.colors && relatedProduct.colors.length > 0 ? relatedProduct.colors[0].name : null;
+                            const relatedSelectedStorage = relatedProduct.storageOptions && relatedProduct.storageOptions.length > 0 ? relatedProduct.storageOptions[0].capacity : null;
+                            const relatedPriceModifier = relatedProduct.storageOptions && relatedProduct.storageOptions.length > 0 ? relatedProduct.storageOptions[0].priceModifier : 0;
+                            const relatedFinalPrice = relatedProduct.basePrice + relatedPriceModifier;
+
+                            addToCart({
+                                id: relatedProduct.id,
+                                name: relatedProduct.name,
+                                price: relatedFinalPrice,
+                                imageUrl: relatedProduct.images.default || relatedProduct.images[Object.keys(relatedProduct.images)[0]],
+                                quantity: 1,
+                                selectedColor: relatedSelectedColor,
+                                selectedStorage: relatedSelectedStorage,
+                                singleProductTotal: relatedFinalPrice
+                            });
+                            // MODIFIED: Replaced alert with toast
+                            showToast(`${relatedProduct.name} added to cart!`);
+                        }
+                    });
+                });
+            } else {
+                relatedProductsContainer.parentElement.style.display = 'none'; // Hide related products section
+            }
+
+
+            // --- Event Listeners for Product Options ---
+            const quantityInput = document.getElementById('quantity');
+
+            function updatePrice() {
+                const basePrice = product.basePrice;
+                const finalPrice = basePrice + currentSelectedStoragePriceModifier;
+                document.getElementById('product-current-price').textContent = `${appData.company.currencySymbol}${finalPrice.toFixed(2)}`;
+            }
+
+            // Event listeners for thumbnail clicks
+            const thumbnailImages = document.querySelectorAll('.thumbnail-img');
+            thumbnailImages.forEach(img => {
+                img.addEventListener('click', () => {
+                    mainProductImage.src = img.src;
+                    thumbnailImages.forEach(i => i.classList.remove('active'));
+                    img.classList.add('active');
+                });
+            });
+
+            // Event listeners for color option clicks
+            colorSelector.querySelectorAll('.color-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const imageKey = option.dataset.imageKey;
+                    const colorName = option.dataset.colorName;
+
+                    mainProductImage.src = product.images[imageKey];
+                    selectedColorText.textContent = colorName;
+
+                    colorSelector.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+                    option.classList.add('active');
+
+                    // Also update active state on thumbnails for consistency
+                    thumbnailImages.forEach(img => {
+                        img.classList.remove('active');
+                        if (img.dataset.imageKey === imageKey) {
+                            img.classList.add('active');
+                        }
+                    });
+
+                    currentSelectedColor = colorName;
+                });
+            });
+
+            // Event listeners for storage option clicks (if present)
+            if (storageSelector) { // Check if storage selector exists
+                storageSelector.querySelectorAll('.storage-option').forEach(button => {
+                    button.addEventListener('click', () => {
+                        storageSelector.querySelectorAll('.storage-option').forEach(btn => btn.classList.remove('selected'));
+                        button.classList.add('selected');
+                        currentSelectedStorage = button.dataset.capacity;
+                        currentSelectedStoragePriceModifier = parseFloat(button.dataset.priceModifier);
+                        selectedStorageText.textContent = currentSelectedStorage; // Update selected storage text
+                        updatePrice();
+                    });
+                });
+            }
+
+
+            // Add to Cart button logic
+            document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+                const quantity = parseInt(quantityInput.value);
+                const currentPrice = parseFloat(document.getElementById('product-current-price').textContent.replace(appData.company.currencySymbol, ''));
+
+                const itemToAdd = {
+                    id: product.id,
+                    name: product.name,
+                    price: currentPrice,
+                    imageUrl: mainProductImage.src,
+                    quantity: quantity,
+                    selectedColor: currentSelectedColor,
+                    selectedStorage: currentSelectedStorage,
+                    singleProductTotal: currentPrice * quantity
+                };
+                addToCart(itemToAdd);
+                // MODIFIED: Replaced alert with toast
+                showToast(`${quantity} x ${product.name} (${currentSelectedColor || ''} ${currentSelectedStorage ? currentSelectedStorage + ' ' : ''}) added to cart!`);
+            });
+
+            // Initial price update
+            updatePrice();
+        }
+
+        // MODIFIED: Search Functionality for product.html to redirect to index.html
+        function setupProductSearch() {
+            const searchInput = document.getElementById('productSearchInput');
+            if (searchInput) { // Only proceed if the search input exists
+                searchInput.addEventListener('keydown', (event) => {
+                    // Trigger search on Enter key press
+                    if (event.key === 'Enter') {
+                        const query = searchInput.value.trim();
+                        if (query.length > 0) {
+                            // Redirect to index.html with the search query
+                            window.location.href = `index.html?search=${encodeURIComponent(query)}`;
+                        } else {
+                            // Optional: Inform user to type something or just do nothing
+                            showToast('Please enter a search term.', 'info');
+                        }
+                    }
+                });
+            }
+        }
+
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            populateStaticContent();
+            updateCartCount(); // Update cart count on all pages
+            const productId = getProductIdFromUrl();
+            if (productId) {
+                populateProductPage(productId);
+            } else {
+                // Display a message if no product ID is provided in the URL
+                document.getElementById('product-details-container').innerHTML = `<p class="text-center text-red-500 text-xl py-20">No product selected. Please navigate from the homepage.</p>`;
+                // Hide other sections if no product selected
+                document.querySelector('main > div:nth-of-type(2)').style.display = 'none'; // Product Overview section
+                document.querySelector('section.py-12').style.display = 'none'; // You Might Also Like section
+            }
+
+            // Initialize search functionality
+            setupProductSearch();
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let isMenuOpen = false;
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            mobileMenu.style.display = 'none'; // Ensure it's hidden by default
+
+            mobileMenuButton.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.style.display = 'block';
+                    mobileMenuButton.setAttribute('aria-expanded', 'true');
+                    mobileMenu.setAttribute('aria-hidden', 'false');
+                    mobileMenuButton.innerHTML = '<i class="fas fa-times text-2xl"></i>'; // Change icon to 'X'
+                } else {
+                    mobileMenu.style.display = 'none';
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    mobileMenu.setAttribute('aria-hidden', 'true');
+                    mobileMenuButton.innerHTML = '<i class="fas fa-bars text-2xl"></i>'; // Change icon back to 'bars'
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

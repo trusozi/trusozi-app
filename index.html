@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home-Loyapy</title>
+    <link rel="icon" href="assets/apps/logo_without_bg.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/apps/logo_without_bg.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-bg {
+            background-image: url('assets/banners/banner_5.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .category-card img {
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-card img {
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out;
+        }
+
+        .btn-secondary {
+            @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out;
+        }
+
+        .icon-link {
+            @apply text-gray-600 hover:text-blue-600 transition duration-300;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+            /* Hidden by default */
+        }
+
+        /* General mobile layout adjustments for the main header flex container */
+        @media (max-width: 768px) {
+
+            /* Ensure the inner flex container wraps and controls spacing */
+            .sticky-header .flex.justify-between.items-center {
+                flex-wrap: wrap;
+                /* Allow items to wrap onto the next line */
+                align-items: center;
+                /* Vertically align items */
+                gap: 1rem 0;
+                /* Add vertical gap if items wrap, no horizontal gap at this level */
+            }
+
+            /* Hide desktop navigation on mobile */
+            .desktop-nav {
+                display: none;
+            }
+
+            /* Show mobile menu button container */
+            .mobile-menu-button-container {
+                display: flex;
+                /* Make it visible */
+                order: 4;
+                /* Place it last in the visual order (after search if it wraps) */
+                flex-shrink: 0;
+                /* Prevent it from shrinking */
+            }
+
+            /* Adjust search bar for mobile */
+            .search-bar-container {
+                width: 100%;
+                /* Take full width of its row */
+                order: 3;
+                /* Position it after logo and icons group */
+                min-width: unset;
+                /* Remove desktop min-width constraint */
+                margin-top: 0.5rem;
+                /* Small vertical spacing if it wraps to a new line */
+            }
+
+            .search-bar-container input[type="search"] {
+                width: 100%;
+                /* Ensure input field takes full width of its container */
+            }
+
+            /* Group for user and cart icons */
+            .header-icons-mobile-group {
+                display: flex;
+                /* Make it a flex container */
+                gap: 1.25rem;
+                /* Space between user and cart icons (adjust as needed) */
+                order: 2;
+                /* Position it after the logo */
+                flex-shrink: 0;
+                /* Prevent it from shrinking */
+            }
+
+            /* Logo specific adjustments for mobile */
+            #header-logo {
+                flex-shrink: 0;
+                /* Prevent logo from shrinking */
+                order: 1;
+                /* Ensure logo is first */
+            }
+
+            /* Ensure search results container overlays correctly */
+            #searchResultsContainer {
+                width: calc(100% - 2rem);
+                /* Account for padding in the main container if it's placed inside */
+                left: 1rem;
+                /* Adjust if it's not full width to align with input */
+                right: 1rem;
+            }
+        }
+
+
+        .search-bar-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            /* Default width for desktop */
+            min-width: 250px;
+        }
+
+        .search-bar-container input[type="search"] {
+            padding-right: 2.5rem;
+            /* Space for the icon */
+            flex-grow: 1;
+            /* Allow input to fill available space in its container */
+        }
+
+        @media (min-width: 768px) {
+
+            /* md breakpoint */
+            .search-bar-container input[type="search"] {
+                min-width: 350px;
+                /* Wider search bar on larger screens */
+            }
+        }
+
+        .search-icon-wrapper {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: #9ca3af;
+            /* Tailwind gray-400 */
+        }
+
+        .search-icon-wrapper i {
+            transition: color 0.3s ease;
+        }
+
+        .search-bar-container input[type="search"]:focus+.search-icon-wrapper i {
+            color: #3b82f6;
+            /* Tailwind blue-500 */
+        }
+
+        /* Search Results Overlay */
+        #searchResultsContainer {
+            position: absolute;
+            top: 100%;
+            /* Position below the search bar */
+            left: 0;
+            width: 100%;
+            /* Full width of its parent .search-bar-container */
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            /* Tailwind gray-200 */
+            border-top: none;
+            border-radius: 0 0 0.5rem 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 40;
+            /* Below sticky header but above other content */
+            display: none;
+            /* Hidden by default */
+        }
+
+        #searchResultsContainer.active {
+            display: block;
+            /* Show when active */
+        }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f3f4f6;
+            /* Tailwind gray-100 */
+            transition: background-color 0.2s ease;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background-color: #f9fafb;
+            /* Tailwind gray-50 */
+        }
+
+        .search-result-item img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            margin-right: 1rem;
+            border-radius: 0.25rem;
+        }
+
+        .search-result-item h4 {
+            font-weight: 500;
+            color: #1f2937;
+            /* Tailwind gray-800 */
+            margin-bottom: 0.25rem;
+        }
+
+        .search-result-item p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            /* Tailwind gray-500 */
+        }
+
+        /* --- GLOBAL TOAST NOTIFICATION STYLES --- */
+        #toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+
+        .toast-message {
+            background-color: #16a34a;
+            /* Tailwind's green-600 */
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            /* px-4 py-2 */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            /* shadow-lg */
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            /* gap-2 */
+            pointer-events: all;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            min-width: 200px;
+            max-width: 300px;
+        }
+
+        .toast-message.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast-message.hide {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        /* --- END GLOBAL TOAST NOTIFICATION STYLES --- */
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="toast-container"></div>
+
+    <div class="bg-gray-800 text-white text-xs py-2 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <div id="top-utility-links">
+            </div>
+            <div>
+                <span id="free-shipping-message"></span>
+            </div>
+        </div>
+    </div>
+
+    <header id="mainHeader" class="sticky-header shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="index.html" class="text-3xl font-bold text-blue-600 hidden md:block"
+                    id="header-logo">YourLogo</a>
+
+                <nav class="hidden md:flex space-x-6 items-center desktop-nav" id="desktop-nav-links">
+                </nav>
+
+                <div class="flex items-center space-x-4 w-full md:w-auto md:flex-grow-0">
+
+                    <div class="relative search-bar-container">
+                        <input type="search" id="searchInput" placeholder="Search products..."
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        <span class="search-icon-wrapper" id="searchIcon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <div id="searchResultsContainer">
+                        </div>
+                    </div>
+
+                    <div class="header-icons-mobile-group pr-4">
+
+                        <a href="cart.html" class="icon-link text-xl relative">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cart-count"
+                                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+
+
+                    <div class="md:hidden mobile-menu-button-container">
+                        <button id="mobileMenuButton" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                            <i class="fas fa-bars text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="mobile-menu md:hidden bg-white shadow-lg absolute w-full">
+            <nav class="flex flex-col space-y-2 p-4" id="mobile-nav-links">
+                <hr class="my-2">
+                <a href="#" class="block py-2 px-3 text-gray-600 hover:bg-blue-50 rounded-md">My Account</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-bg text-white py-20 md:py-32">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 drop-shadow-lg">Discover the Latest in Kitchen & Home
+                </h1>
+                <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto drop-shadow-md" id="company-slogan"></p>
+                <a href="#featured-products" class="btn-primary text-lg">Shop New Arrivals</a>
+            </div>
+        </section>
+
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center"
+                    id="feature-highlights-container">
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-10">Shop by Category</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6" id="categories-container">
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white" id="featured-products">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-10">Featured Products</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="featured-products-container">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Shop</h5>
+                    <ul class="space-y-2" id="footer-shop-links">
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Customer Service</h5>
+                    <ul class="space-y-2" id="footer-customer-service-links">
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Our Company</h5>
+                    <ul class="space-y-2" id="footer-company-links">
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Connect With Us</h5>
+                    <div class="flex space-x-4 mb-6">
+                        <a href="https://www.facebook.com/share/19Dbj1JNVL"
+                            class="text-gray-400 hover:text-white text-2xl transition duration-300"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/loyapy?t=AZ4Sp8zWW5G9XaWUPd8csQ&s=09"
+                            class="text-gray-400 hover:text-white text-2xl transition duration-300"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/loyapy24?igsh=dm9wYTF1Y2pqY2J2"
+                            class="text-gray-400 hover:text-white text-2xl transition duration-300"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/share/19Dbj1JNVL"
+                            class="text-gray-400 hover:text-white text-2xl transition duration-300"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/share/19Dbj1JNVL"
+                            class="text-gray-400 hover:text-white text-2xl transition duration-300"><i
+                                class="fab fa-youtube"></i></a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 text-center">
+                <p class="text-sm">&copy; <span id="currentYearFooter"></span> <span id="footer-company-name"></span>.
+                    All Rights Reserved.</p>
+                <p class="text-xs mt-1" id="footer-designed-by"></p>
+            </div>
+        </div>
+    </footer>
+    <script src="imagePaths.js"></script>
+    <script src="data.js"></script>
+    <script>
+        // --- Common Functions for all pages ---
+        /**
+         * Retrieves cart items from localStorage.
+         * @returns {Array} An array of cart items.
+         */
+        function getCartItems() {
+            try {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                // console.log("getCartItems: Retrieved cart:", cart);
+                return cart;
+            } catch (e) {
+                console.error("Error parsing cart from localStorage:", e);
+                return [];
+            }
+        }
+
+        /**
+         * Updates the cart count badge in the header.
+         */
+        function updateCartCount() {
+            const cart = getCartItems();
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCountElement.textContent = totalItems;
+                // console.log("updateCartCount: Badge count updated to:", totalItems);
+            }
+        }
+
+        /**
+         * Saves the current cart array to localStorage and triggers UI updates.
+         * This is the single entry point for saving cart data and updating the count.
+         * @param {Array} cart - The cart array to save.
+         */
+        function saveCartItems(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            // console.log("saveCartItems: Cart saved to localStorage:", cart);
+            updateCartCount(); // Update the header cart badge
+            // Note: For other pages like cart.html, you might call renderCartItems() here.
+            // For index.html, only the count needs to update.
+        }
+
+        /**
+         * Adds a product to the cart or updates its quantity if it already exists.
+         * This function is typically called from other pages (e.g., product detail page).
+         * @param {Object} product - The product object to add.
+         * @param {number} quantity - The quantity to add.
+         * @param {string|null} selectedColor - The selected color of the product (for product variations).
+         */
+        function addToCart(product, quantity = 1, selectedColor = null) {
+            let cart = getCartItems();
+            const existingItemIndex = cart.findIndex(item =>
+                item.id === product.id &&
+                item.selectedColor === selectedColor
+            );
+
+            if (existingItemIndex > -1) {
+                // Item exists, update quantity
+                cart[existingItemIndex].quantity += quantity;
+                // console.log("addToCart: Updated quantity for existing item.");
+            } else {
+                // Add new item
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price, // Use base price for quick add from homepage
+                    imageUrl: product.imageUrl,
+                    quantity: quantity,
+                    selectedColor: selectedColor
+
+                });
+                // console.log("addToCart: Added new item to cart.");
+            }
+            saveCartItems(cart); // Save and update the cart count
+            showToast(`${product.name} Added to Cart!`); // Show the global toast notification
+        }
+
+
+        /**
+         * Populates static content like header and footer links from appData.
+         */
+        function populateStaticContent() {
+            // Ensure appData is available (from data.js)
+            if (typeof appData === 'undefined') {
+                console.error("Error: appData is not defined. Make sure data.js is loaded correctly.");
+                return;
+            }
+
+            // Top Bar
+            document.getElementById('free-shipping-message').textContent = `Free Delivery Over ${appData.company.freeShippingThreshold}${appData.company.currencySymbol}`;
+
+
+            // Header
+            document.getElementById('header-logo').textContent = appData.company.logoText;
+
+
+            document.getElementById('header-logo').href = "index.html"; // Ensure logo links to home
+
+            const desktopNavLinksContainer = document.getElementById('desktop-nav-links');
+            if (desktopNavLinksContainer) {
+                desktopNavLinksContainer.innerHTML = appData.navLinks.map(link =>
+                    `<a href="${link.href}" class="text-gray-600 hover:text-blue-600 transition duration-300">${link.name}</a>`
+                ).join('');
+            }
+
+            const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
+            if (mobileNavLinksContainer) {
+                // Clear existing and add main nav links
+                mobileNavLinksContainer.innerHTML = appData.navLinks.map(link =>
+                    `<a href="${link.href}" class="block py-2 px-3 text-gray-600 hover:bg-blue-50 rounded-md">${link.name}</a>`
+                ).join('');
+                // Add separator and static "My Account"
+                mobileNavLinksContainer.innerHTML += '<hr class="my-2">';
+                mobileNavLinksContainer.innerHTML += '<a href="#" class="block py-2 px-3 text-gray-600 hover:bg-blue-50 rounded-md">My Account</a>';
+            }
+
+            // Footer
+            const currentYearElements = document.querySelectorAll('[id^="currentYear"]'); // Use selector to catch both
+            currentYearElements.forEach(el => el.textContent = new Date().getFullYear());
+            const footerCompanyNames = document.querySelectorAll('#footer-company-name');
+            footerCompanyNames.forEach(el => el.textContent = appData.company.name);
+            const footerDesignedByElements = document.querySelectorAll('#footer-designed-by');
+            footerDesignedByElements.forEach(el => el.textContent = appData.company.footerDesignedBy);
+
+
+            const footerShopLinksContainer = document.getElementById('footer-shop-links');
+            if (footerShopLinksContainer) {
+                footerShopLinksContainer.innerHTML = appData.footerShopLinks.map(link =>
+                    `<li><a href="${link.href}" class="hover:text-blue-400 transition duration-300">${link.name}</a></li>`
+                ).join('');
+            }
+
+            const footerCustomerServiceLinksContainer = document.getElementById('footer-customer-service-links');
+            if (footerCustomerServiceLinksContainer) {
+                footerCustomerServiceLinksContainer.innerHTML = appData.footerCustomerServiceLinks.map(link =>
+                    `<li><a href="${link.href}" class="hover:text-blue-400 transition duration-300">${link.name}</a></li>`
+                ).join('');
+            }
+
+            const footerCompanyLinksContainer = document.getElementById('footer-company-links');
+            if (footerCompanyLinksContainer) {
+                footerCompanyLinksContainer.innerHTML = appData.footerCompanyLinks.map(link =>
+                    `<li><a href="${link.href}" class="hover:text-blue-400 transition duration-300">${link.name}</a></li>`
+                ).join('');
+            }
+        }
+
+        // --- Homepage Specific Functions ---
+        function populateHomePageContent() {
+            // Ensure appData is available (from data.js)
+            if (typeof appData === 'undefined') {
+                console.error("Error: appData is not defined. Make sure data.js is loaded correctly.");
+                return;
+            }
+
+            document.getElementById('company-slogan').textContent = appData.company.slogan;
+
+            // Populate Feature Highlights
+            const featureHighlightsContainer = document.getElementById('feature-highlights-container');
+            if (featureHighlightsContainer) {
+                featureHighlightsContainer.innerHTML = appData.featureHighlights.map(feature => `
+                    <div class="p-4">
+                        <div class="text-blue-600 text-3xl mb-3"><i class="${feature.icon}"></i></div>
+                        <h3 class="font-semibold text-lg mb-1">${feature.title}</h3>
+                        <p class="text-sm text-gray-600">${feature.description}</p>
+                    </div>
+                `).join('');
+            }
+
+            // Populate Categories
+            const categoriesContainer = document.getElementById('categories-container');
+            if (categoriesContainer) {
+                categoriesContainer.innerHTML = appData.categories.map(category => `
+                    <a href="${category.href}" class="category-card bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300 group">
+                        <img src="${category.imageUrl}" alt="${category.name}" class="mx-auto mb-4 h-24 md:h-32 object-contain rounded-md">
+                        <h3 class="text-lg font-semibold text-gray-700 group-hover:text-blue-600">${category.name}</h3>
+                    </a>
+                `).join('');
+            }
+
+            // Populate Featured Products
+            const featuredProductsContainer = document.getElementById('featured-products-container');
+            if (featuredProductsContainer) {
+                const featuredProducts = appData.products.filter(p => p.isFeatured);
+                featuredProductsContainer.innerHTML = featuredProducts.map(product => `
+                    <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden group" id="product-card-${product.id}">
+                        <a href="product.html?id=${product.id}">
+                            <img src="${product.images.default || product.images[Object.keys(product.images)[0]]}" alt="${product.name}" class="w-full h-56 object-cover">
+                        </a>
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2 truncate group-hover:text-blue-600">
+                                <a href="product.html?id=${product.id}">${product.name}</a>
+                            </h3>
+                            <p class="text-sm text-gray-600 mb-3">${product.shortDescription}</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-2xl font-bold text-blue-600">${appData.company.currencySymbol}${product.basePrice.toFixed(2)}</span>
+                                ${product.originalPrice ? `<span class="text-xs text-gray-500 line-through">${appData.company.currencySymbol}${product.originalPrice.toFixed(2)}</span>` : ''}
+                            </div>
+                            <div class="add-to-cart-btn-wrapper border border-gray-300 p-2 rounded inline-block">
+                                <button class="btn-primary text-sm add-to-cart-btn text-left flex items-center" data-product-id="${product.id}">
+                                    <i class="fas fa-shopping-cart mr-2"></i> Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Add event listeners for "Add to Cart" buttons
+                document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const productId = event.currentTarget.dataset.productId;
+                        const product = appData.products.find(p => p.id === productId);
+
+                        if (product) {
+                            // Call the addToCart function, which now includes showToast
+                            addToCart({
+                                id: product.id,
+                                name: product.name,
+                                price: product.basePrice,
+                                imageUrl: product.images.default || product.images[Object.keys(product.images)[0]],
+                            }, 1, // Quantity 1
+                                product.colors && product.colors.length > 0 ? product.colors[0].name : null,
+
+                            );
+                        }
+                    });
+                });
+            }
+        }
+
+        // --- GLOBAL TOAST NOTIFICATION FUNCTION ---
+        function showToast(message, duration = 3000) {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                console.error("Toast container not found!");
+                return;
+            }
+
+            const toast = document.createElement('div');
+            toast.classList.add('toast-message');
+            toast.innerHTML = `<i class="fas fa-check-circle mr-2"></i> ${message}`; // Add a checkmark icon
+
+            toastContainer.appendChild(toast);
+
+            // Trigger animation
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10); // Small delay to allow CSS to register initial state
+
+            // Dismiss after duration
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.classList.add('hide'); // Add hide class for exit animation
+                // Remove element after transition
+                toast.addEventListener('transitionend', () => {
+                    toast.remove();
+                }, { once: true }); // Ensure listener is removed after one use
+            }, duration);
+        }
+
+        // --- Search Functionality ---
+        const searchInput = document.getElementById('searchInput');
+        const searchResultsContainer = document.getElementById('searchResultsContainer');
+        const searchIcon = document.getElementById('searchIcon'); // Get the search icon element
+
+        let searchTimeout;
+
+        function displaySearchResults(results) {
+            searchResultsContainer.innerHTML = ''; // Clear previous results
+
+            if (results.length === 0) {
+                searchResultsContainer.classList.remove('active');
+                return;
+            }
+
+            searchResultsContainer.classList.add('active'); // Show results container
+
+            results.forEach(product => {
+                const resultItem = document.createElement('a');
+                resultItem.href = `product.html?id=${product.id}`;
+                resultItem.classList.add('search-result-item');
+                resultItem.innerHTML = `
+                    <img src="${product.images.default || product.images[Object.keys(product.images)[0]]}" alt="${product.name}">
+                    <div>
+                        <h4>${product.name}</h4>
+                        <p>${appData.company.currencySymbol}${product.basePrice.toFixed(2)}</p>
+                    </div>
+                `;
+                searchResultsContainer.appendChild(resultItem);
+            });
+        }
+
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+
+            if (query.length < 2) { // Require at least 2 characters to start searching
+                displaySearchResults([]);
+                return;
+            }
+
+            const filteredProducts = appData.products.filter(product =>
+                product.name.toLowerCase().includes(query) ||
+                product.shortDescription.toLowerCase().includes(query) ||
+                product.category.toLowerCase().includes(query)
+            );
+
+            displaySearchResults(filteredProducts);
+        }
+
+        // Debounce search input
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(performSearch, 300); // Wait 300ms after last keystroke
+        });
+
+        // Hide search results when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!searchInput.contains(event.target) && !searchResultsContainer.contains(event.target)) {
+                searchResultsContainer.classList.remove('active');
+            }
+        });
+
+        // Show results immediately on focus if there's existing text
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value.length >= 2) {
+                performSearch();
+            }
+        });
+
+
+        // --- Initialization on page load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            populateStaticContent();
+            populateHomePageContent(); // Populate dynamic content for the homepage
+            updateCartCount(); // Ensure cart count is updated on page load
+        });
+
+        // --- Mobile menu toggle logic ---
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let isMenuOpen = false;
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            mobileMenu.style.display = 'none';
+
+            mobileMenuButton.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.style.display = 'block';
+                    mobileMenuButton.setAttribute('aria-expanded', 'true');
+                    mobileMenu.setAttribute('aria-hidden', 'false');
+                    mobileMenuButton.innerHTML = '<i class="fas fa-times text-2xl"></i>'; // Change icon to 'X'
+                } else {
+                    mobileMenu.style.display = 'none';
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    mobileMenu.setAttribute('aria-hidden', 'true');
+                    mobileMenuButton.innerHTML = '<i class="fas fa-bars text-2xl"></i>'; // Change icon back to 'bars'
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
